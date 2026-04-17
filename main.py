@@ -63,15 +63,10 @@ movies['crew'] = movies['crew'].apply(lambda x:[i.replace(" ", "") for i in x])
 
 # concatenating all the columns to create new column named tags
 
-movies['tag'] = movies['overview'] + movies['genres'] + movies['keywords'] + movies['cast'] + movies['crew']
-
-# print(movies.head())
+movies['tags'] = movies['overview'] + movies['genres'] + movies['keywords'] + movies['cast'] + movies['crew']
 
 new_df = movies[['id', 'title', 'tags']]
 
-print(new_df)
-
-# print(movies.columns)
 
 
 
