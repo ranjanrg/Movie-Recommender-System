@@ -6,7 +6,7 @@ credits = pd.read_csv('credits.csv')
 
 movies = movies.merge(credits, on = 'title')
 
-unwanted_cols = ['budget', 'homepage', 'original_language', 'original_title', 'popularity', 'production_companies', 'production_countries','runtime', 'release_date', 'revenue', 'spoken_languages', 'status', 'tagline','vote_average', 'vote_count', 'movie_id']
+unwanted_cols = ['budget', 'homepage', 'original_language', 'original_title', 'popularity', 'production_companies', 'production_countries','runtime', 'release_date', 'revenue', 'spoken_languages', 'status', 'tagline','vote_average', 'vote_count', 'id']
 
 movies = movies.drop(columns = unwanted_cols)
 
@@ -65,8 +65,6 @@ movies['crew'] = movies['crew'].apply(lambda x:[i.replace(" ", "") for i in x])
 
 movies['tags'] = movies['overview'] + movies['genres'] + movies['keywords'] + movies['cast'] + movies['crew']
 
-new_df = movies[['id', 'title', 'tags']]
 
-
-
-
+new_df = movies[['movie_id', 'title', 'tags']]
+new_df['tags'] = new_df['tags'].apply(lambda x:" ".join(x))
