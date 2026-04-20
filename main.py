@@ -1,5 +1,7 @@
 import pandas as pd
 import ast
+from sklearn.feature_extraction.text import CountVectorizer
+from nltk.stem.porter import  PorterStemmer
 
 movies = pd.read_csv('movies.csv')
 credits = pd.read_csv('credits.csv')
@@ -69,3 +71,21 @@ movies['tags'] = movies['overview'] + movies['genres'] + movies['keywords'] + mo
 new_df = movies[['movie_id', 'title', 'tags']]
 new_df['tags'] = new_df['tags'].apply(lambda x:" ".join(x))
 new_df['tags'] = new_df['tags'].apply(lambda x:x.lower())
+
+# Text vectorization using bag of words technique
+
+cv = CountVectorizer(max_features=5000, stop_words='english')
+
+vectors = cv.fit_transform(new_df['tags']).toarray()
+
+# applying stemming to remove repitition
+ps = PorterStemmer()
+
+def stem(text):
+  y = []
+
+  for i in text.split():
+    y.append(ps.stem(i))
+  return " ".join(y)
+
+new_df['tags'] = new_df['tags'].apply(stem)
