@@ -3,6 +3,7 @@ import ast
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.stem.porter import  PorterStemmer
 from sklearn.metrics.pairwise import cosine_similarity
+import pickle
 
 movies = pd.read_csv('movies.csv')
 credits = pd.read_csv('credits.csv')
@@ -104,3 +105,6 @@ def recommend(movie):
     print(new_df.iloc[i[0]].title)
 
 recommend('Avatar')
+
+pickle.dump(new_df, open('movies.pkl', 'wb'))
+pickle.dump(similarity, open('similarity.pkl', 'wb'))

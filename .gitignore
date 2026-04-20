@@ -1,1 +1,3 @@
 /venv
+movie_recommender_web/movies.pkl
+movie_recommender_web/similarity.pkl
