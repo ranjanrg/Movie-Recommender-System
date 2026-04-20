@@ -2,6 +2,7 @@ import pandas as pd
 import ast
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.stem.porter import  PorterStemmer
+from sklearn.metrics.pairwise import cosine_similarity
 
 movies = pd.read_csv('movies.csv')
 credits = pd.read_csv('credits.csv')
@@ -89,3 +90,17 @@ def stem(text):
   return " ".join(y)
 
 new_df['tags'] = new_df['tags'].apply(stem)
+
+similarity = cosine_similarity(vectors)
+
+def recommend(movie):
+  movie_index = new_df[new_df['title'] == movie].index[0]
+  distances = similarity[movie_index]
+  movies_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x:x[1])[1:6]
+
+  for i in movies_list:
+    print(new_df.iloc[i[0]].title)
+
+
+
+recommend('Avatar')
