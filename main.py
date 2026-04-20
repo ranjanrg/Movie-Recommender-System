@@ -91,6 +91,8 @@ def stem(text):
 
 new_df['tags'] = new_df['tags'].apply(stem)
 
+# using cosine method to find the distances between in 2 vectors in 5000 dim and creating the reccomndation system main function
+
 similarity = cosine_similarity(vectors)
 
 def recommend(movie):
@@ -100,7 +102,5 @@ def recommend(movie):
 
   for i in movies_list:
     print(new_df.iloc[i[0]].title)
-
-
 
 recommend('Avatar')
