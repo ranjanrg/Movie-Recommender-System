@@ -1,32 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Recommendation System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <main class="page-shell">
+        <section class="hero" aria-labelledby="page-title">
+            <p class="eyebrow">Personalized picks in seconds</p>
+            <h1 id="page-title">Movie Recommendation System</h1>
+            <p class="hero-copy">
+                Choose a film you already enjoy and discover five similar titles powered by content-based matching.
+            </p>
 
-    <h1>Movie Recommendation System</h1>
+            <form method="POST" class="recommendation-form">
+                <label for="movie">Start with a movie</label>
+                <div class="control-row">
+                    <select id="movie" name="movie" required>
+                        <option value="" disabled {% if not selected_movie %}selected{% endif %}>Select a movie</option>
+                        {% for movie in movie_list %}
+                            <option value="{{ movie }}" {% if movie == selected_movie %}selected{% endif %}>{{ movie }}</option>
+                        {% endfor %}
+                    </select>
 
-    <form method="POST">
-        <select name="movie">
-            {% for movie in movie_list %}
-                <option value="{{ movie }}">{{ movie }}</option>
-            {% endfor %}
-        </select>
+                    <button type="submit">Find Matches</button>
+                </div>
+            </form>
+        </section>
 
-        <button type="submit">Recommend</button>
-    </form>
+        <section class="results-panel" aria-live="polite">
+            {% if recommendations %}
+                <div class="results-heading">
+                    <p class="eyebrow">Because you chose</p>
+                    <h2>{{ selected_movie }}</h2>
+                </div>
 
-    {% if recommendations %}
-        <h2>Recommended Movies:</h2>
-
-        <ul>
-            {% for movie in recommendations %}
-                <li>{{ movie }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+                <ol class="movie-grid">
+                    {% for movie in recommendations %}
+                        <li class="movie-card">
+                            <span class="rank">0{{ loop.index }}</span>
+                            <h3>{{ movie }}</h3>
+                            <p>Similar themes, cast signals, genres, and story tags.</p>
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% else %}
+                <div class="empty-state">
+                    <span class="spotlight" aria-hidden="true"></span>
+                    <h2>Your next watchlist starts here.</h2>
+                    <p>Select a movie above to reveal a curated set of recommendations.</p>
+                </div>
+            {% endif %}
+        </section>
+    </main>
 
 </body>
 </html>
