@@ -9,10 +9,10 @@
 <body>
     <main class="page-shell">
         <section class="hero" aria-labelledby="page-title">
-            <p class="eyebrow">Personalized picks in seconds</p>
+            <p class="eyebrow">Movie matcher</p>
             <h1 id="page-title">Movie Recommendation System</h1>
             <p class="hero-copy">
-                Choose a film you already enjoy and discover five similar titles powered by content-based matching.
+                Pick one movie you like. Get five similar movies instantly.
             </p>
 
             <form method="POST" class="recommendation-form">
@@ -42,7 +42,7 @@
                         <li class="movie-card">
                             <span class="rank">0{{ loop.index }}</span>
                             <h3>{{ movie }}</h3>
-                            <p>Similar themes, cast signals, genres, and story tags.</p>
+                            <p>Similar story signals and genre patterns.</p>
                         </li>
                     {% endfor %}
                 </ol>
